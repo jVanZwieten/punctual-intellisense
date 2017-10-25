@@ -1,10 +1,12 @@
 # punctual-intellisense README
 
-This is the README for your extension "punctual-intellisense". After writing up a brief description, we recommend including the following sections.
+Ports the simple (yet addictive) Visual Studio feature of accepting intellisense suggestions using the punctuation that will follow the suggestion. This puts the developer into a "forward thinking" posture in which after seeing the correct suggestion, he's already thinking about the code that follows after it.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* Accepts intellisense suggestion when the user taps a designated punctuation key, then writes that punctuation. Allows user to designate which keys for which this applies through custom user settings.
+* When holding down alt, this function is disabled so that the user can type a designated key without accepting if he/she wants. The user can also tap `Esc` to exit the suggestion widget.
+* In case the user wants to type a designated key but accepts a suggestion without intending to, accepting the suggestion is on the top of the undo stack. This allows the user to unto the suggestion while keeping the punctuation.
 
 For example if there is an image subfolder under your extension project workspace:
 
@@ -38,14 +40,6 @@ Users appreciate release notes as you update your extension.
 ### 1.0.0
 
 Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
 
 -----------------------------------------------------------------------------------------------------------
 

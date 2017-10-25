@@ -26,11 +26,9 @@ export function activate(context: vscode.ExtensionContext) {
             await vscode.commands.executeCommand('acceptSelectedSuggestion')
 
             const suggestionRange = document.getWordRangeAtPosition(editor.selection.active)
-
             const suggestion = editor.document.getText(suggestionRange)
 
             await vscode.commands.executeCommand('undo')
-
             return suggestion
         }
 
@@ -40,10 +38,8 @@ export function activate(context: vscode.ExtensionContext) {
 
         async function replaceFragmentWithSuggestion(suggestion) {
             let positionBeforePunctuation = cursorPosition().translate(0, -1)
-
             let draftRange = document.getWordRangeAtPosition(positionBeforePunctuation)
                 || new vscode.Range(positionBeforePunctuation, positionBeforePunctuation)
-
             await editor.edit(editBuilder => editBuilder.replace(draftRange, suggestion))
         }
 
