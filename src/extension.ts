@@ -22,9 +22,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 
     function registerTypeForwardCommands(typeForwardKeys: string[], context: vscode.ExtensionContext) {
-        for (const key of typeForwardKeys) {
+        for (const key of typeForwardKeys)
             registerTypeForwardCommand(key, context)
-        }
 
 
         function registerTypeForwardCommand(key: string, context: vscode.ExtensionContext) {
@@ -62,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         function writeExtensionSettings(extensionSettingsPath: string, settings) {
-            let saveSettings=JSON.stringify(settings)
+            let saveSettings = JSON.stringify(settings)
             fs.writeFileSync(extensionSettingsPath, JSON.stringify(settings))
         }
     }
@@ -74,6 +73,9 @@ export function activate(context: vscode.ExtensionContext) {
         let suggestion = await getSuggestion()
         await addPunctiation()
         replaceFragmentWithSuggestion(suggestion)
+
+        if (punctuation === '.')
+            await vscode.commands.executeCommand('editor.action.triggerSuggest')
 
         async function getSuggestion() {
             await vscode.commands.executeCommand('acceptSelectedSuggestion')
@@ -106,6 +108,7 @@ function disposeCommands() {
     for (const command of disposables)
         command.dispose()
 }
+
 export function deactivate() {
     disposeCommands()
 }
