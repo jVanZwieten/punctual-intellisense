@@ -4,10 +4,11 @@ Ports the simple (yet addictive) Visual Studio feature of accepting intellisense
 
 ## Features
 
-* Accepts intellisense suggestion when the user taps any designated punctuation key, then writes that punctuation. Allows user to define which keys through settings.json.
+* Accepts intellisense suggestion when the user taps any designated punctuation key, then writes that punctuation. Behavior is modeled after Visual Studio.
 * When `.` used, the next suggestion widget is triggered.
 * If typing punctuation is desired without accepting the suggestion, the user can tap `Esc` to exit the suggestion widget before typing the punctuation.
 * In case the user wants to type a designated key but accepts a suggestion without intending to, accepting the suggestion is on the top of the undo stack. This allows the user to undo the suggestion while keeping the punctuation.
+* Allows user to define which keys through settings.json.
 
 
 <!-- For example if there is an image subfolder under your extension project workspace:
