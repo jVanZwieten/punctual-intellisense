@@ -4,38 +4,33 @@ Ports the simple (yet addictive) Visual Studio feature of accepting intellisense
 
 ## Features
 
-* Accepts intellisense suggestion when the user taps a designated punctuation key, then writes that punctuation. Allows user to designate which keys for which this applies through custom user settings.
-* When holding down alt, this function is disabled so that the user can type a designated key without accepting if he/she wants. The user can also tap `Esc` to exit the suggestion widget.
-* In case the user wants to type a designated key but accepts a suggestion without intending to, accepting the suggestion is on the top of the undo stack. This allows the user to unto the suggestion while keeping the punctuation.
+* Accepts intellisense suggestion when the user taps any designated punctuation key, then writes that punctuation. Allows user to define which keys through settings.json.
+* When `.` used, the next suggestion widget is triggered.
+* If typing punctuation is desired without accepting the suggestion, the user can tap `Esc` to exit the suggestion widget before typing the punctuation.
+* In case the user wants to type a designated key but accepts a suggestion without intending to, accepting the suggestion is on the top of the undo stack. This allows the user to undo the suggestion while keeping the punctuation.
 
-For example if there is an image subfolder under your extension project workspace:
+
+<!-- For example if there is an image subfolder under your extension project workspace:
 
 \!\[feature X\]\(images/feature-x.png\)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow. -->
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `punctual-intellisense.typeForwardKeys`: Array of keys which will accept an Intellisense suggestion before being typed. If unspecified through user settings, the extension default keys will be used. If specified, every desired key must be included.
+
+The default keys are: `.,!@#%^&*()-=+[]{}<>/?|~;:` and `space`
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* When openning parentheses/brackets are typed, the closing is not included. Future feature.
+* `.` is the accessor in many languages, but not all. At this time, only those languages for which it is are supported (as far as triggering the next suggestion widget). Future feature may allow for different behaviors per language, if there's public demand for it.
+* Bad things happen when using this with JSON. Will need to figure out how to deactivate when JSON is being edited.
 
-## Release Notes
-
-Users appreciate release notes as you update your extension.
+<!-- ## Release Notes
 
 ### 1.0.0
 
@@ -55,5 +50,3 @@ Initial release of ...
 
 * [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
 * [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
