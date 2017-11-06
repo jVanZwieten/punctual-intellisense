@@ -161,10 +161,10 @@
         "configuration": {
             "title": "Punctual Intellisense configuration",
             "properties": {
-                "typeForwardKeys": {
+                "punctual-intellisense.typeForwardKeys": {
                     "type": "array",
                     "default": [".",",","!","@","#","%","^","&","*","(",")","-", "=","+","[","]","{","}","<",">","/","?","|","~",";",":"," "],
-                    "description": "Array of keys which will accept an Intellisense suggestion before being typed. Must have a corresponding keybinding to be honored. All default keys have keybindings available already, new bindings must be manually added for any new keys."
+                    "description": "Array of keys which will accept an Intellisense suggestion before being typed."
                 }
             }
         }

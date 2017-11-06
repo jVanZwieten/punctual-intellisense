@@ -3,22 +3,29 @@ import * as vscode from 'vscode'
 import * as fs from 'fs'
 import { shiftKeys } from "./shiftKeys"
 
+
 let disposables: vscode.Disposable[] = []
+const keyBindingsChangedMessage='Changes were detected in your typeForwardKeys settings. Please restart Visual Studio Code in order for these new bindings to take effect.'
+
 
 export function activate(context: vscode.ExtensionContext) {
-    let typeForwardKeys: string[] = vscode.workspace.getConfiguration().typeForwardKeys
+    let typeForwardKeys: string[] = getTypeForwardKeys()
     registerTypeForwardCommands(typeForwardKeys, context)
 
     vscode.workspace.onDidChangeConfiguration(() => {
-        let newTypeForwardKeys: string[] = vscode.workspace.getConfiguration().typeForwardKeys
+        let newTypeForwardKeys: string[] = getTypeForwardKeys()
         if (!equivalent(typeForwardKeys, newTypeForwardKeys)) {
             typeForwardKeys = newTypeForwardKeys
 
             writeTypeForwardKeyBindings(typeForwardKeys, context)
-            vscode.window.showInformationMessage('Changes were detected in your typeForwardKeys settings. Please restart Visual Studio Code in order for these new bindings to take effect.')
+            vscode.window.showInformationMessage(keyBindingsChangedMessage)
         }
     })
 
+
+    function getTypeForwardKeys(): string[] {
+        return vscode.workspace.getConfiguration('punctual-intellisense').typeForwardKeys
+    }
 
     function registerTypeForwardCommands(typeForwardKeys: string[], context: vscode.ExtensionContext) {
         for (const key of typeForwardKeys)
@@ -70,7 +77,7 @@ export function activate(context: vscode.ExtensionContext) {
         const document = editor.document
 
         let suggestion = await getSuggestion()
-        await addPunctiation()
+        await addPunctuation()
         replaceFragmentWithSuggestion(suggestion)
 
         if (punctuation === '.')
@@ -86,7 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
             return suggestion
         }
 
-        async function addPunctiation() {
+        async function addPunctuation() {
             await editor.edit(editBuilder => editBuilder.insert(cursorPosition(), punctuation))
         }
 
