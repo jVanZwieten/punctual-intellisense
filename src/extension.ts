@@ -14,9 +14,8 @@ export function activate(context: vscode.ExtensionContext) {
         if (!equivalent(typeForwardKeys, newTypeForwardKeys)) {
             typeForwardKeys = newTypeForwardKeys
 
-            disposeCommands()
-            registerTypeForwardCommands(typeForwardKeys, context)
-            registerTypeForwardKeyBindings(typeForwardKeys, context)
+            writeTypeForwardKeyBindings(typeForwardKeys, context)
+            vscode.window.showInformationMessage('Changes were detected in your typeForwardKeys settings. Please restart Visual Studio Code in order for these new bindings to take effect.')
         }
     })
 
@@ -34,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function registerTypeForwardKeyBindings(typeForwardKeys, context: vscode.ExtensionContext) {
+    function writeTypeForwardKeyBindings(typeForwardKeys, context: vscode.ExtensionContext) {
         const extensionSettingsPath = context.extensionPath + "\\package.json"
         let extensionSettings = readExtensionSettings(extensionSettingsPath)
 
