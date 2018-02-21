@@ -5,7 +5,7 @@ import { shiftKeys } from "./shiftKeys"
 
 
 let disposables: vscode.Disposable[] = []
-const keyBindingsChangedMessage='Changes were detected in your typeForwardKeys settings. Please restart Visual Studio Code in order for these new bindings to take effect.'
+const keyBindingsChangedMessage = 'Changes were detected in your typeForwardKeys settings. Please restart Visual Studio Code in order for these new bindings to take effect.'
 
 
 export function activate(context: vscode.ExtensionContext) {
@@ -40,7 +40,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     }
 
-    function writeTypeForwardKeyBindings(typeForwardKeys, context: vscode.ExtensionContext) {
+    function writeTypeForwardKeyBindings(typeForwardKeys: string[], context: vscode.ExtensionContext) {
         const extensionSettingsPath = context.extensionPath + "\\package.json"
         let extensionSettings = readExtensionSettings(extensionSettingsPath)
 
@@ -76,12 +76,17 @@ export function activate(context: vscode.ExtensionContext) {
         const editor = vscode.window.activeTextEditor
         const document = editor.document
 
-        let suggestion = await getSuggestion()
-        await addPunctuation()
-        replaceFragmentWithSuggestion(suggestion)
+        // This doesn't play well in conjunction with VSCode's manipulation with JSON, therefore we'll just abort if the editor is JSON. I don't like defending against this here; it aught to be done at the keybinding level so we can stay out of the way in that case, but it's a limitation of VSCode "when" arguments in keybindings. The issues is logged here: https://github.com/Microsoft/vscode/issues/38972
+        if (document.languageId !== "jsonc") {
+            let suggestion = await getSuggestion()
+            await addPunctuation(punctuation)
+            replaceFragmentWithSuggestion(suggestion)
+            if (punctuation === '.')
+                await vscode.commands.executeCommand('editor.action.triggerSuggest')
+        } else
+            addPunctuation(punctuation)
 
-        if (punctuation === '.')
-            await vscode.commands.executeCommand('editor.action.triggerSuggest')
+
 
         async function getSuggestion() {
             await vscode.commands.executeCommand('acceptSelectedSuggestion')
@@ -93,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
             return suggestion
         }
 
-        async function addPunctuation() {
+        async function addPunctuation(punctuation: string) {
             await editor.edit(editBuilder => editBuilder.insert(cursorPosition(), punctuation))
         }
 
