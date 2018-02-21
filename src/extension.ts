@@ -2,6 +2,7 @@
 import * as vscode from 'vscode'
 import * as fs from 'fs'
 import { shiftKeys } from "./shiftKeys"
+import { openCloseKeys } from "./openCloseKeys"
 
 
 let disposables: vscode.Disposable[] = []
@@ -100,6 +101,11 @@ export function activate(context: vscode.ExtensionContext) {
 
         async function addPunctuation(punctuation: string) {
             await editor.edit(editBuilder => editBuilder.insert(cursorPosition(), punctuation))
+            if (openCloseKeys.hasOwnProperty(punctuation)) {
+                await editor.edit(editBuilder => editBuilder.insert(cursorPosition(), openCloseKeys[punctuation]))
+                let insideCursorPosition=cursorPosition().translate(0, -1)
+                editor.selection = new vscode.Selection(insideCursorPosition, insideCursorPosition)
+            }
         }
 
         async function replaceFragmentWithSuggestion(suggestion) {

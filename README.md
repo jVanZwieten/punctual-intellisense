@@ -27,9 +27,7 @@ The default keys are: `.,!@#%^&*()-=+[]{}<>/?|~;:` and `space`
 
 ## Known Issues
 
-* When openning parentheses/brackets are typed, the closing is not included. Future feature.
 * `.` is the accessor in many languages, but not all. At this time, only those languages for which it is are supported (as far as triggering the next suggestion widget). Future feature may allow for different behaviors per language, if there's public demand for it.
-* Bad things happen when using this with JSON. Will need to figure out how to deactivate when JSON is being edited.
 
 <!-- ## Release Notes
 
