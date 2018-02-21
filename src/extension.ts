@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 
 
-        async function getSuggestion() {
+        async function getSuggestion(): Promise<string> {
             await vscode.commands.executeCommand('acceptSelectedSuggestion')
 
             const suggestionRange = document.getWordRangeAtPosition(editor.selection.active)

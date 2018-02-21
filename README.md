@@ -2,6 +2,8 @@
 
 Ports the simple (yet addictive) Visual Studio feature of accepting intellisense suggestions using the punctuation that will follow the suggestion. This puts the developer into a "forward thinking" posture in which after seeing the correct suggestion, he's already thinking about the code that follows after it.
 
+VSCode *sort of* does this already, but not consistantly, and not in proper undo order.
+
 ## Features
 
 * Accepts intellisense suggestion when the user taps any designated punctuation key, then writes that punctuation. Behavior is modeled after Visual Studio.
@@ -28,6 +30,8 @@ The default keys are: `.,!@#%^&*()-=+[]{}<>/?|~;:` and `space`
 ## Known Issues
 
 * `.` is the accessor in many languages, but not all. At this time, only those languages for which it is are supported (as far as triggering the next suggestion widget). Future feature may allow for different behaviors per language, if there's public demand for it.
+* This does not work well alongside VSCode's JSON editing, so the functionality is bypassed when editing JSON.
+* If the selected suggestion is a snippet, the previous word will be deleted upon typing. To my knowledge, this cannot be defended against due to VSCode extension API limitation. Logged at https://github.com/Microsoft/vscode/issues/44155. For now until a solution can be found, this is an easily avoidable scenario.
 
 <!-- ## Release Notes
 
